@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SW 254 · Advocacy Products Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1613;
+    --paper: #f4ede0;
+    --paper-deep: #ebe0cc;
+    --rust: #9c3a1a;
+    --rust-deep: #6e2811;
+    --ochre: #c8902c;
+    --moss: #3d5033;
+    --pencil: #6b5d4d;
+    --rule: #c9b896;
+    --hi: #fff3c4;
+    --warn: #d97706;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(156, 58, 26, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(200, 144, 44, 0.04) 0%, transparent 40%);
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 32px 120px; position: relative; z-index: 2; }
+  .masthead { border-top: 6px double var(--ink); border-bottom: 1px solid var(--ink); padding: 24px 0 20px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; }
+  .masthead-l, .masthead-r { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pencil); }
+  .title-block { padding: 36px 0 42px; border-bottom: 1px solid var(--ink); position: relative; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rust); margin-bottom: 20px; display: inline-block; padding: 4px 10px; background: var(--paper-deep); border: 1px solid var(--rust); }
+  h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 6.5vw, 82px); line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 18px; font-variation-settings: "opsz" 144; }
+  h1 em { font-style: italic; font-weight: 400; color: var(--rust); }
+  .dek { font-family: 'Fraunces', serif; font-size: 20px; line-height: 1.45; color: var(--pencil); max-width: 720px; font-weight: 400; font-style: italic; }
+  .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--ink); margin-bottom: 40px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .meta-item { display: flex; gap: 8px; align-items: center; }
+  .meta-item strong { color: var(--rust); font-weight: 600; }
+  .meta-dot { width: 6px; height: 6px; background: var(--ochre); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+
+  .approval-alert { background: var(--ink); color: var(--paper); padding: 22px 28px 22px 68px; margin-bottom: 48px; position: relative; border-left: 8px solid var(--warn); }
+  .approval-alert::before { content: '!'; position: absolute; left: 22px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; background: var(--warn); color: var(--ink); display: grid; place-items: center; font-family: 'Fraunces', serif; font-size: 22px; font-weight: 900; border-radius: 50%; }
+  .approval-alert-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warn); font-weight: 600; margin-bottom: 6px; }
+  .approval-alert-body { font-family: 'Fraunces', serif; font-size: 16px; line-height: 1.55; }
+  .approval-alert-body strong { color: var(--ochre); font-weight: 500; }
+
+  section { margin-bottom: 64px; }
+  .section-head { display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: baseline; margin-bottom: 32px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
+  .section-num { font-family: 'Fraunces', serif; font-weight: 900; font-size: 72px; line-height: 1; color: var(--rust); font-style: italic; }
+  .section-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(28px, 4vw, 42px); line-height: 1.05; letter-spacing: -0.01em; }
+  .section-title small { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pencil); margin-bottom: 10px; font-style: normal; }
+
+  .pitch { font-family: 'Fraunces', serif; font-size: 19px; line-height: 1.6; margin-bottom: 24px; }
+  .pitch p + p { margin-top: 18px; }
+  .pitch strong { background: var(--hi); padding: 0 4px; font-weight: 600; }
+
+  .callout { background: var(--ink); color: var(--paper); padding: 28px 32px; margin: 24px 0; font-family: 'Fraunces', serif; font-size: 18px; line-height: 1.5; position: relative; }
+  .callout::before { content: '※'; position: absolute; top: 18px; left: -18px; background: var(--rust); color: var(--paper); width: 36px; height: 36px; display: grid; place-items: center; font-size: 22px; border-radius: 50%; }
+  .callout strong { color: var(--ochre); font-weight: 500; }
+
+  .timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; background: var(--ink); border: 2px solid var(--ink); margin-bottom: 20px; }
+  .tl-cell { background: var(--paper); padding: 20px 18px; position: relative; }
+  .tl-cell.done { background: var(--paper-deep); }
+  .tl-cell.active { background: var(--hi); }
+  .tl-cell.urgent { background: rgba(217, 119, 6, 0.2); }
+  .tl-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; font-weight: 600; }
+  .tl-label { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; line-height: 1.2; margin-bottom: 6px; }
+  .tl-sub { font-size: 12px; color: var(--pencil); line-height: 1.4; }
+  .tl-marker { position: absolute; top: 8px; right: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--pencil); }
+  .tl-marker.live { color: var(--rust); }
+  .tl-marker.live::before { content: '●'; margin-right: 4px; animation: pulse 1.5s infinite; display: inline-block; }
+  .tl-marker.warn { color: var(--warn); }
+
+  .products { display: grid; gap: 24px; }
+  .product { border: 1.5px solid var(--ink); background: var(--paper); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+  .product:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+  .product.pending { border-style: dashed; border-color: var(--warn); }
+  .product.pending .product-head { background: rgba(217, 119, 6, 0.08); }
+  .product-head { display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center; padding: 20px 26px; border-bottom: 1px solid var(--rule); background: var(--paper-deep); }
+  .product-rank { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 900; font-style: italic; color: var(--rust); line-height: 1; }
+  .product-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; line-height: 1.15; }
+  .product-title small { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pencil); margin-bottom: 4px; font-weight: 500; }
+  .status-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 12px; border: 1px solid var(--ink); background: var(--paper); cursor: pointer; white-space: nowrap; }
+  .status-pill[data-status="not-started"] { background: var(--paper); color: var(--pencil); }
+  .status-pill[data-status="drafting"] { background: var(--ochre); color: var(--ink); }
+  .status-pill[data-status="review"] { background: var(--hi); color: var(--ink); }
+  .status-pill[data-status="final"] { background: var(--moss); color: var(--paper); border-color: var(--moss); }
+  .status-pill[data-status="pending-approval"] { background: var(--warn); color: var(--paper); border-color: var(--warn); }
+
+  .product-body { padding: 22px 26px 4px; }
+  .product-rationale { font-family: 'Fraunces', serif; font-size: 16px; line-height: 1.55; margin-bottom: 18px; color: var(--ink); }
+  .product-specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .spec { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: var(--paper-deep); border: 1px solid var(--rule); color: var(--pencil); }
+  .spec strong { color: var(--ink); font-weight: 600; }
+  .tool-chip { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); }
+  .tool-chip::before { content: '▸'; color: var(--ochre); }
+
+  .angle-box { border-left: 3px solid var(--rust); padding: 8px 16px; margin: 14px 0 18px; background: rgba(156, 58, 26, 0.04); }
+  .angle-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rust); font-weight: 600; margin-bottom: 4px; }
+  .angle-box p { font-family: 'Fraunces', serif; font-size: 15px; line-height: 1.5; font-style: italic; }
+
+  .script-excerpt { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; background: var(--ink); color: var(--paper); padding: 16px 20px; margin: 12px 0 18px; overflow-x: auto; }
+  .script-excerpt-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); margin-bottom: 8px; font-weight: 600; }
+  .script-excerpt strong { color: var(--ochre); }
+
+  .fallback-note { font-size: 13px; font-style: italic; color: var(--warn); padding: 10px 14px; background: rgba(217, 119, 6, 0.08); border-left: 3px solid var(--warn); margin: 12px 0 18px; font-family: 'Fraunces', serif; }
+  .fallback-note strong { color: var(--rust-deep); font-style: normal; font-weight: 600; }
+
+  .input-zone { border-top: 1px dashed var(--rule); padding: 18px 26px 22px; background: repeating-linear-gradient(-45deg, transparent, transparent 12px, rgba(201, 184, 150, 0.08) 12px, rgba(201, 184, 150, 0.08) 13px); }
+  .input-zone-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: var(--pencil); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .input-zone-label::before { content: ''; width: 20px; height: 1px; background: var(--pencil); }
+  .input-form { display: grid; grid-template-columns: 140px 1fr auto; gap: 10px; margin-bottom: 14px; }
+  .name-input, .text-input { font-family: 'Inter Tight', sans-serif; font-size: 14px; padding: 10px 12px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); transition: background 0.15s; }
+  .name-input:focus, .text-input:focus { outline: none; background: var(--hi); }
+  .text-input::placeholder, .name-input::placeholder { color: var(--pencil); font-style: italic; }
+  .add-btn { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; padding: 0 18px; background: var(--ink); color: var(--paper); border: 1.5px solid var(--ink); cursor: pointer; transition: background 0.15s; }
+  .add-btn:hover { background: var(--rust); border-color: var(--rust); }
+  .comments { display: flex; flex-direction: column; gap: 10px; }
+  .comment { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 12px 14px; background: var(--paper); border-left: 3px solid var(--ochre); font-size: 14px; line-height: 1.5; animation: slideIn 0.3s ease-out; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  .comment-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); font-weight: 600; margin-bottom: 4px; }
+  .comment-time { color: var(--pencil); font-weight: 400; }
+  .del-btn { background: none; border: none; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--pencil); cursor: pointer; padding: 2px 6px; align-self: start; }
+  .del-btn:hover { color: var(--rust); }
+  .empty-state { font-family: 'Fraunces', serif; font-style: italic; color: var(--pencil); font-size: 14px; padding: 8px 0; }
+
+  .claim-block { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--paper-deep); border: 1px solid var(--rule); margin-top: 14px; }
+  .claim-block label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: var(--pencil); }
+  .claim-block select { font-family: 'Inter Tight', sans-serif; font-size: 13px; padding: 6px 10px; border: 1px solid var(--ink); background: var(--paper); cursor: pointer; }
+
+  .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 20px; }
+  .role { padding: 16px; border: 1px solid var(--rule); background: var(--paper); }
+  .role-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; }
+  .role-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rust); font-weight: 600; }
+
+  .rubric-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--paper); }
+  .rubric-table th { padding: 12px 14px; text-align: left; font-weight: 600; background: var(--ink); color: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .rubric-table td { padding: 12px 14px; vertical-align: top; }
+  .rubric-table tr { border-bottom: 1px solid var(--rule); }
+  .rubric-table tr:nth-child(even) td { background: var(--paper-deep); }
+  .rubric-table td:first-child { font-family: 'Fraunces', serif; font-weight: 600; }
+  .rubric-wrap { border: 1.5px solid var(--ink); overflow-x: auto; }
+
+  .colophon { margin-top: 80px; padding-top: 32px; border-top: 6px double var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pencil); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .decorative-rule { text-align: center; margin: 24px 0; font-family: 'Fraunces', serif; font-size: 20px; color: var(--ochre); letter-spacing: 1em; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 24px 18px 80px; }
+    .section-head { grid-template-columns: 1fr; gap: 8px; }
+    .section-num { font-size: 48px; }
+    .product-head { grid-template-columns: 1fr; gap: 8px; text-align: left; }
+    .input-form { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: 1fr; }
+    .approval-alert { padding: 18px 20px 18px 20px; border-left-width: 6px; }
+    .approval-alert::before { position: static; transform: none; margin-bottom: 10px; }
+  }
+
+  .save-ping { position: fixed; bottom: 24px; right: 24px; background: var(--moss); color: var(--paper); padding: 10px 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0; transform: translateY(20px); transition: all 0.3s; z-index: 100; pointer-events: none; }
+  .save-ping.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="masthead-l">SW 254 · Policy Practice · UC Berkeley · Spring '26</div>
+    <div class="masthead-r">Internal Briefing · Vol. 02</div>
+  </div>
+
+  <div class="title-block">
+    <div class="eyebrow">Team Briefing · For Review</div>
+    <h1>Three products,<br>one <em>united front.</em></h1>
+    <p class="dek">A working plan for our April 24 deliverables — video, podcast, and website — plus a place for you to weigh in, redirect, or take the wheel yourselves.</p>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-item"><span class="meta-dot"></span><span>Status: <strong>Live Draft</strong></span></div>
+    <div class="meta-item">Deadline: <strong>Fri, Apr 24 · 11:59pm</strong></div>
+    <div class="meta-item">First drafts: <strong>Sunday</strong></div>
+    <div class="meta-item">Weight: <strong>30% of final</strong></div>
+  </div>
+
+  <div class="approval-alert">
+    <div class="approval-alert-title">Heads up · Action needed before we commit</div>
+    <div class="approval-alert-body">
+      The <strong>website</strong> isn't one of the five standard advocacy products listed in the assignment. The syllabus requires instructor approval for non-standard products <strong>at least two weeks before the due date</strong> — that window closed Apr 10. <strong>I'm reaching out to Dr. Chang today</strong> to ask if she'll still approve it given how closely it tracks the rubric (argument, evidence, strategic impact, medium-specific strengths). If she says no, we pivot to an op-ed as the third product — see the fallback plan below. Either way, the video and podcast are locked in.
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-title">
+        <small>The Proposal</small>
+        What I'm offering to do
+      </div>
+    </div>
+
+    <div class="pitch">
+      <p>Hey team — we've got <strong>three advocacy products due April 24</strong>, and I'd like to volunteer to take the lead on the creative development for all of them. This isn't me trying to hog the work. It's the opposite.</p>
+      <p>The mix I'm proposing: a <strong>short video</strong> (built with HeyGen), a <strong>podcast-style audio piece</strong> (scripted in Canva, voiced with ElevenLabs), and a <strong>campaign website</strong> that pulls everything together as a third standalone product — pending Dr. Chang's sign-off.</p>
+      <p>My plan: have first iterations of all three drafted by <strong>this Sunday</strong>. That gives us a full week to iterate before the deadline. You can approve, edit, redirect, or — if you'd rather take a product on yourself — claim it and run with it.</p>
+      <p>Everything I draft is a <strong>starting point, not a finished product</strong>. I want your pushback. I want your angles. I want the versions that only you would think of.</p>
+    </div>
+
+    <div class="callout">
+      <strong>The ask:</strong> Drop your input below — on any section, any product, any part of the plan. Even one sentence helps. If you want to own one of the three products entirely, there's a claim toggle on each card.
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-title">
+        <small>Working Timeline</small>
+        From now to the deadline
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-cell urgent">
+        <div class="tl-marker warn">TODAY</div>
+        <div class="tl-date">Apr 17 · Fri</div>
+        <div class="tl-label">Email Dr. Chang</div>
+        <div class="tl-sub">Request late approval for website as 3rd product</div>
+      </div>
+      <div class="tl-cell active">
+        <div class="tl-marker live">LIVE</div>
+        <div class="tl-date">Apr 17–18</div>
+        <div class="tl-label">Team input window</div>
+        <div class="tl-sub">Drop suggestions on any section</div>
+      </div>
+      <div class="tl-cell">
+        <div class="tl-marker">→</div>
+        <div class="tl-date">Apr 19 · Sun</div>
+        <div class="tl-label">First drafts up</div>
+        <div class="tl-sub">Video v1 · podcast v1 · site v1</div>
+      </div>
+      <div class="tl-cell">
+        <div class="tl-marker">→</div>
+        <div class="tl-date">Apr 20–22</div>
+        <div class="tl-label">Review & revise</div>
+        <div class="tl-sub">Team edits, re-records, tweaks</div>
+      </div>
+      <div class="tl-cell">
+        <div class="tl-marker">→</div>
+        <div class="tl-date">Apr 23 · Thu</div>
+        <div class="tl-label">Final polish</div>
+        <div class="tl-sub">Export · captions · QA · citations</div>
+      </div>
+      <div class="tl-cell">
+        <div class="tl-marker">★</div>
+        <div class="tl-date">Apr 24 · Fri</div>
+        <div class="tl-label">Submit by 11:59pm</div>
+        <div class="tl-sub">bCourses · Eva leads submit</div>
+      </div>
+    </div>
+
+    <div class="input-zone" data-thread="timeline">
+      <div class="input-zone-label">Input on the timeline</div>
+      <div class="input-form">
+        <input type="text" class="name-input" placeholder="Your name" maxlength="40">
+        <input type="text" class="text-input" placeholder="Does this pace work? Conflicts I should know about?">
+        <button class="add-btn">Post</button>
+      </div>
+      <div class="comments"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-title">
+        <small>The Three Products</small>
+        Video · Podcast · Website
+      </div>
+    </div>
+
+    <div class="pitch">
+      <p>Each medium does something the others can't. The <strong>video</strong> is shareable and emotionally direct. The <strong>podcast</strong> goes deeper, lets us walk through the argument. The <strong>website</strong> is where a legislator or journalist lands when they want to cite us — it hosts everything, adds context, and serves as our "united front."</p>
+    </div>
+
+    <div class="products">
+
+      <div class="product">
+        <div class="product-head">
+          <div class="product-rank">i.</div>
+          <div class="product-title">
+            <small>Digital · Medium 1 · Standard Product</small>
+            The Video (90s–2min)
+          </div>
+          <button class="status-pill" data-status="not-started" data-product="video">Not Started</button>
+        </div>
+        <div class="product-body">
+          <p class="product-rationale">Hits the "engage the public via media" impact criterion and travels well on social. HeyGen lets us generate a clean avatar-delivered script with B-roll overlays — far more polished than anything we could shoot ourselves in a weekend, and it keeps production from becoming the bottleneck.</p>
+
+          <div class="product-specs">
+            <span class="tool-chip">HeyGen · avatar + VO</span>
+            <span class="tool-chip">Canva · B-roll + graphics</span>
+            <span class="spec">Length · <strong>90s–2min</strong></span>
+            <span class="spec">Format · <strong>MP4 · 16:9 + vertical cut</strong></span>
+          </div>
+
+          <div class="angle-box">
+            <div class="angle-box-label">Proposed Angle</div>
+            <p>Open on a phone screen at 2am, algorithm feeding a teen more of what's hurting them. Cold voiceover: "The Surgeon General put a warning on this. California wrote the law. But the algorithm keeps scrolling." Build through stats (39.7% persistent sadness, 3+ hours = 2x depression risk, 95% of teens on social media). Land on: regulate design, not just content.</p>
+          </div>
+
+          <div class="script-excerpt">
+            <div class="script-excerpt-label">Script beat sheet · draft</div>
+            <strong>00:00</strong> — Hook: phone screen glow, 2am<br>
+            <strong>00:10</strong> — Problem: 39.7% of teens report persistent sadness<br>
+            <strong>00:25</strong> — Mechanism: infinite scroll, algorithmic amplification<br>
+            <strong>00:45</strong> — Policy gap: SB 976 + AB 56 only address content<br>
+            <strong>01:10</strong> — The ask: regulate design features, not posts<br>
+            <strong>01:40</strong> — CTA: "Tell CA legislators to close the design gap"
+          </div>
+
+          <div class="claim-block">
+            <label>Ownership:</label>
+            <select data-claim="video">
+              <option value="ian">Ian leads (my default)</option>
+              <option value="omar">Omar takes it</option>
+              <option value="aracelli">Aracelli takes it</option>
+              <option value="liming">Liming takes it</option>
+              <option value="eva">Eva takes it</option>
+              <option value="shared">Co-lead / split</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-zone" data-thread="video">
+          <div class="input-zone-label">Input on the video</div>
+          <div class="input-form">
+            <input type="text" class="name-input" placeholder="Your name" maxlength="40">
+            <input type="text" class="text-input" placeholder="Script changes? Visual ideas? Avatar style? Music vibe?">
+            <button class="add-btn">Post</button>
+          </div>
+          <div class="comments"></div>
+        </div>
+      </div>
+
+      <div class="product">
+        <div class="product-head">
+          <div class="product-rank">ii.</div>
+          <div class="product-title">
+            <small>Audio · Medium 2 · Standard Product</small>
+            The Podcast / Audio Piece
+          </div>
+          <button class="status-pill" data-status="not-started" data-product="podcast">Not Started</button>
+        </div>
+        <div class="product-body">
+          <p class="product-rationale">A two-voice mini-podcast that uses conversation format to unpack the "design vs. content" distinction for listeners. ElevenLabs gives us two distinct, natural-sounding voices — one framing the problem, one carrying the policy argument. Canva for visual cover art + waveform treatment if we embed it in the website.</p>
+
+          <div class="product-specs">
+            <span class="tool-chip">ElevenLabs · 2 voices</span>
+            <span class="tool-chip">Canva · cover art + waveform</span>
+            <span class="spec">Length · <strong>90s–2min</strong></span>
+            <span class="spec">Format · <strong>MP3</strong></span>
+          </div>
+
+          <div class="angle-box">
+            <div class="angle-box-label">Proposed Angle</div>
+            <p>Two-host format. Voice A lays out the problem (CDC stats, teen testimonial framing). Voice B reframes: "We keep debating what kids are seeing. The real question is what the platform is doing to them." Walk through the cigarette-warning parallel. End with specific policy ask — build on SB 976, implement AB 56, add design audits.</p>
+          </div>
+
+          <div class="script-excerpt">
+            <div class="script-excerpt-label">Script beat sheet · draft</div>
+            <strong>00:00</strong> — Cold open: "Nearly 4 in 10 high schoolers..."<br>
+            <strong>00:20</strong> — Voice B reframe: design, not content<br>
+            <strong>00:45</strong> — Mechanism walk-through: infinite scroll, algorithmic loops<br>
+            <strong>01:10</strong> — What CA has done: SB 976, AB 56<br>
+            <strong>01:30</strong> — What's missing: design audits, exposure transparency<br>
+            <strong>01:50</strong> — CTA + sign-off
+          </div>
+
+          <div class="claim-block">
+            <label>Ownership:</label>
+            <select data-claim="podcast">
+              <option value="ian">Ian leads (my default)</option>
+              <option value="omar">Omar takes it</option>
+              <option value="aracelli">Aracelli takes it</option>
+              <option value="liming">Liming takes it</option>
+              <option value="eva">Eva takes it</option>
+              <option value="shared">Co-lead / split</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-zone" data-thread="podcast">
+          <div class="input-zone-label">Input on the podcast</div>
+          <div class="input-form">
+            <input type="text" class="name-input" placeholder="Your name" maxlength="40">
+            <input type="text" class="text-input" placeholder="Script beats? Voice casting? Music bed? Cover art direction?">
+            <button class="add-btn">Post</button>
+          </div>
+          <div class="comments"></div>
+        </div>
+      </div>
+
+      <div class="product pending">
+        <div class="product-head">
+          <div class="product-rank">iii.</div>
+          <div class="product-title">
+            <small>Digital · Medium 3 · Pending Approval</small>
+            The Campaign Website
+          </div>
+          <button class="status-pill" data-status="pending-approval" data-product="website">Pending Approval</button>
+        </div>
+        <div class="product-body">
+          <p class="product-rationale">A single-page advocacy site that becomes the public home for the campaign — hosts the video, embeds the podcast, frames the argument in readable sections, and offers a clear CTA (contact legislator, sign petition, share). The rubric maps cleanly: background, argument, evidence (5+ sources), medium-specific strengths (interactivity, shareability), strategic impact (hub for "united front"), presentation.</p>
+
+          <div class="product-specs">
+            <span class="tool-chip">Framer / Carrd / Wix</span>
+            <span class="tool-chip">Custom domain optional</span>
+            <span class="spec">Length · <strong>long-form scroll</strong></span>
+            <span class="spec">Sources · <strong>5+ embedded</strong></span>
+          </div>
+
+          <div class="angle-box">
+            <div class="angle-box-label">Proposed Structure</div>
+            <p>Hero: "Beyond Content Moderation." One-sentence thesis. Embedded video. Scroll into: the problem (stats), the mechanism (algorithm design), current CA policy, the gap, our three recommendations. Embedded podcast. Coalition of supporting orgs. CTA block. Citations footer.</p>
+          </div>
+
+          <div class="fallback-note">
+            <strong>Fallback plan if Dr. Chang says no:</strong> We swap this for a 750–1000 word op-ed pitched at the SF Chronicle or LA Times, using the same "design vs. content" framing. Minimal disruption — the argument, evidence, and CTA all transfer over. I'll have the op-ed draft ready by Sunday either way as insurance.
+          </div>
+
+          <div class="claim-block">
+            <label>Ownership:</label>
+            <select data-claim="website">
+              <option value="ian">Ian leads (my default)</option>
+              <option value="omar">Omar takes it</option>
+              <option value="aracelli">Aracelli takes it</option>
+              <option value="liming">Liming takes it</option>
+              <option value="eva">Eva takes it</option>
+              <option value="shared">Co-lead / split</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-zone" data-thread="website">
+          <div class="input-zone-label">Input on the website (or the fallback op-ed)</div>
+          <div class="input-form">
+            <input type="text" class="name-input" placeholder="Your name" maxlength="40">
+            <input type="text" class="text-input" placeholder="Site structure? Platform? Domain name ideas? Op-ed angle?">
+            <button class="add-btn">Post</button>
+          </div>
+          <div class="comments"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-title">
+        <small>Rubric Check</small>
+        How each product hits all 6 areas
+      </div>
+    </div>
+
+    <div class="pitch">
+      <p>Each product gets graded on the same 10-point rubric. Here's how each one hits the six areas — flagged so we don't leave points on the table.</p>
+    </div>
+
+    <div class="rubric-wrap">
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>Rubric Area</th>
+            <th>Pts</th>
+            <th>Video</th>
+            <th>Podcast</th>
+            <th>Website / Op-Ed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Background</td>
+            <td>1</td>
+            <td>Opening hook + stat</td>
+            <td>Cold open framing</td>
+            <td>Dedicated "Problem" section</td>
+          </tr>
+          <tr>
+            <td>Argument</td>
+            <td>2</td>
+            <td>Design, not content</td>
+            <td>Two-voice reframe</td>
+            <td>Thesis + 3 recommendations</td>
+          </tr>
+          <tr>
+            <td>Evidence (5+)</td>
+            <td>2.5</td>
+            <td>CDC, Surgeon Gen, Orben, APA, SB 976</td>
+            <td>Same 5 + testimonial framing</td>
+            <td>All 5 w/ citations</td>
+          </tr>
+          <tr>
+            <td>Medium Strengths</td>
+            <td>2</td>
+            <td>Visual pacing, graphics, motion</td>
+            <td>Voice inflection, conversation</td>
+            <td>Interactivity, hub, shareability</td>
+          </tr>
+          <tr>
+            <td>Strategic Impact</td>
+            <td>1.5</td>
+            <td>Public engagement</td>
+            <td>Deeper audience retention</td>
+            <td>"United front" hub + CTA</td>
+          </tr>
+          <tr>
+            <td>Presentation</td>
+            <td>1</td>
+            <td>Captions, export quality</td>
+            <td>Clean audio, levels</td>
+            <td>Design polish, no errors</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="input-zone" data-thread="rubric" style="margin-top: 20px;">
+      <div class="input-zone-label">Gaps you see in rubric coverage</div>
+      <div class="input-form">
+        <input type="text" class="name-input" placeholder="Your name" maxlength="40">
+        <input type="text" class="text-input" placeholder="Anything we're weak on? Evidence we should add?">
+        <button class="add-btn">Post</button>
+      </div>
+      <div class="comments"></div>
+    </div>
+  </section>
+
+  <div class="decorative-rule">❦ &nbsp; ❦ &nbsp; ❦</div>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-title">
+        <small>Team Collab Doc (Draft)</small>
+        Proposed roles — adjustable
+      </div>
+    </div>
+
+    <div class="pitch">
+      <p>Carrying over our Issue Brief roles with tweaks for this deliverable. Tell me if anything should shift — especially Eva and Omar given your existing lead responsibilities.</p>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role">
+        <div class="role-title">Creative Lead</div>
+        <div class="role-name">Ian</div>
+        <p style="font-size:13px; margin-top:6px; color:var(--pencil);">First drafts of all 3 products by Sunday. HeyGen + ElevenLabs + site build. Iterate on feedback.</p>
+      </div>
+      <div class="role">
+        <div class="role-title">Project Lead</div>
+        <div class="role-name">Omar</div>
+        <p style="font-size:13px; margin-top:6px; color:var(--pencil);">Trello / timeline oversight. Review & approve final versions. Contact Dr. Chang for approval?</p>
+      </div>
+      <div class="role">
+        <div class="role-title">Communications</div>
+        <div class="role-name">Aracelli</div>
+        <p style="font-size:13px; margin-top:6px; color:var(--pencil);">Script tone review, audience fit, voice casting input for ElevenLabs.</p>
+      </div>
+      <div class="role">
+        <div class="role-title">Documentation</div>
+        <div class="role-name">Liming</div>
+        <p style="font-size:13px; margin-top:6px; color:var(--pencil);">Citations across all 3 products, visual data for video/site, reference consistency.</p>
+      </div>
+      <div class="role">
+        <div class="role-title">Submission Lead</div>
+        <div class="role-name">Eva</div>
+        <p style="font-size:13px; margin-top:6px; color:var(--pencil);">Executive review. Final bCourses submission Apr 24. Collab doc author.</p>
+      </div>
+    </div>
+
+    <div class="input-zone" data-thread="roles">
+      <div class="input-zone-label">Input on roles</div>
+      <div class="input-form">
+        <input type="text" class="name-input" placeholder="Your name" maxlength="40">
+        <input type="text" class="text-input" placeholder="Want a different role? Capacity concerns? Skills I should use better?">
+        <button class="add-btn">Post</button>
+      </div>
+      <div class="comments"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <div class="section-title">
+        <small>Open Floor</small>
+        Questions, vetoes, wild ideas
+      </div>
+    </div>
+
+    <div class="input-zone" data-thread="general">
+      <div class="input-zone-label">General feedback</div>
+      <div class="input-form">
+        <input type="text" class="name-input" placeholder="Your name" maxlength="40">
+        <input type="text" class="text-input" placeholder="Anything. This is your space.">
+        <button class="add-btn">Post</button>
+      </div>
+      <div class="comments"></div>
+    </div>
+  </section>
+
+  <div class="colophon">
+    <div>Beyond Content Moderation · Group Advocacy Briefing</div>
+    <div>Updated Apr 17 · 2026</div>
+  </div>
+
+</div>
+
+<div class="save-ping" id="savePing">Saved</div>
+
+<script>
+  const storage = {
+    _mem: {},
+    async get(key) {
+      try {
+        if (typeof window.storage !== 'undefined' && window.storage) {
+          const r = await window.storage.get(key, true);
+          return r ? r.value : null;
+        }
+      } catch (e) {}
+      return this._mem[key] || null;
+    },
+    async set(key, value) {
+      try {
+        if (typeof window.storage !== 'undefined' && window.storage) {
+          await window.storage.set(key, value, true);
+        }
+      } catch (e) {}
+      this._mem[key] = value;
+    }
+  };
+
+  const pingSave = () => {
+    const p = document.getElementById('savePing');
+    p.classList.add('show');
+    clearTimeout(p._t);
+    p._t = setTimeout(() => p.classList.remove('show'), 1200);
+  };
+
+  const fmtTime = (iso) => {
+    const d = new Date(iso);
+    const now = new Date();
+    const diffMs = now - d;
+    const diffMin = Math.floor(diffMs / 60000);
+    if (diffMin < 1) return 'just now';
+    if (diffMin < 60) return `${diffMin}m ago`;
+    const diffHr = Math.floor(diffMin / 60);
+    if (diffHr < 24) return `${diffHr}h ago`;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  const escapeHtml = (s) => s.replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+
+  async function loadThread(zone) {
+    const thread = zone.dataset.thread;
+    const list = zone.querySelector('.comments');
+    const data = await storage.get(`thread:${thread}`);
+    const comments = data ? JSON.parse(data) : [];
+    renderThread(list, comments, thread);
+  }
+
+  function renderThread(list, comments, thread) {
+    if (!comments.length) {
+      list.innerHTML = '<div class="empty-state">No input yet — be the first.</div>';
+      return;
+    }
+    list.innerHTML = comments.map((c, i) => `
+      <div class="comment">
+        <div>
+          <div class="comment-meta">${escapeHtml(c.name)} <span class="comment-time">· ${fmtTime(c.time)}</span></div>
+          <div>${escapeHtml(c.text)}</div>
+        </div>
+        <button class="del-btn" data-thread="${thread}" data-idx="${i}" title="Delete">✕</button>
+      </div>
+    `).join('');
+  }
+
+  async function addComment(zone) {
+    const thread = zone.dataset.thread;
+    const nameIn = zone.querySelector('.name-input');
+    const textIn = zone.querySelector('.text-input');
+    const name = nameIn.value.trim() || 'Anonymous';
+    const text = textIn.value.trim();
+    if (!text) { textIn.focus(); return; }
+
+    const key = `thread:${thread}`;
+    const data = await storage.get(key);
+    const comments = data ? JSON.parse(data) : [];
+    comments.push({ name, text, time: new Date().toISOString() });
+    await storage.set(key, JSON.stringify(comments));
+
+    textIn.value = '';
+    nameIn.value = name;
+    const list = zone.querySelector('.comments');
+    renderThread(list, comments, thread);
+    pingSave();
+  }
+
+  async function delComment(thread, idx) {
+    const key = `thread:${thread}`;
+    const data = await storage.get(key);
+    const comments = data ? JSON.parse(data) : [];
+    comments.splice(idx, 1);
+    await storage.set(key, JSON.stringify(comments));
+    const zone = document.querySelector(`.input-zone[data-thread="${thread}"]`);
+    const list = zone.querySelector('.comments');
+    renderThread(list, comments, thread);
+    pingSave();
+  }
+
+  const STATUSES = ['not-started', 'drafting', 'review', 'final'];
+  const STATUS_LABELS = {
+    'not-started': 'Not Started',
+    'drafting': 'In Progress',
+    'review': 'Ready for Review',
+    'final': 'Final',
+    'pending-approval': 'Pending Approval'
+  };
+
+  async function cycleStatus(btn) {
+    const product = btn.dataset.product;
+    const current = btn.dataset.status;
+    let statusList = STATUSES;
+    if (current === 'pending-approval') {
+      statusList = ['pending-approval', ...STATUSES];
+    }
+    const nextIdx = (statusList.indexOf(current) + 1) % statusList.length;
+    const next = statusList[nextIdx];
+    btn.dataset.status = next;
+    btn.textContent = STATUS_LABELS[next];
+    await storage.set(`status:${product}`, next);
+    pingSave();
+  }
+
+  async function loadStatuses() {
+    const btns = document.querySelectorAll('.status-pill');
+    for (const btn of btns) {
+      const product = btn.dataset.product;
+      const saved = await storage.get(`status:${product}`);
+      if (saved && STATUS_LABELS[saved]) {
+        btn.dataset.status = saved;
+        btn.textContent = STATUS_LABELS[saved];
+      }
+    }
+  }
+
+  async function loadClaims() {
+    const selects = document.querySelectorAll('select[data-claim]');
+    for (const sel of selects) {
+      const saved = await storage.get(`claim:${sel.dataset.claim}`);
+      if (saved) sel.value = saved;
+    }
+  }
+
+  async function saveClaim(sel) {
+    await storage.set(`claim:${sel.dataset.claim}`, sel.value);
+    pingSave();
+  }
+
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('add-btn')) {
+      const zone = e.target.closest('.input-zone');
+      if (zone) addComment(zone);
+    }
+    if (e.target.classList.contains('del-btn')) {
+      delComment(e.target.dataset.thread, parseInt(e.target.dataset.idx, 10));
+    }
+    if (e.target.classList.contains('status-pill')) {
+      cycleStatus(e.target);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.classList.contains('text-input')) {
+      const zone = e.target.closest('.input-zone');
+      if (zone) addComment(zone);
+    }
+  });
+
+  document.addEventListener('change', (e) => {
+    if (e.target.matches('select[data-claim]')) saveClaim(e.target);
+  });
+
+  (async () => {
+    const zones = document.querySelectorAll('.input-zone');
+    for (const z of zones) await loadThread(z);
+    await loadStatuses();
+    await loadClaims();
+  })();
+</script>
+
+</body>
+</html>
